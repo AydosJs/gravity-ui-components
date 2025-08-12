@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Button, Card, Input, Badge, Select } from '@/components/ui';
 
