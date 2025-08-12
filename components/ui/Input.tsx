@@ -1,15 +1,19 @@
 'use client';
 
 import React from 'react';
-import { TextInput, TextInputProps } from '@gravity-ui/uikit';
 import { cn } from '@/lib/utils';
 
-export interface InputProps extends Omit<TextInputProps, 'size'> {
+export interface InputProps {
     size?: 'sm' | 'md' | 'lg';
     label?: string;
     error?: string;
     className?: string;
     containerClassName?: string;
+    placeholder?: string;
+    type?: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    disabled?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -18,13 +22,18 @@ const Input: React.FC<InputProps> = ({
     error,
     className,
     containerClassName,
+    placeholder,
+    type = 'text',
+    value,
+    onChange,
+    disabled = false,
     ...props
 }) => {
-    const getGravitySize = (size: string) => {
+    const getSizeClasses = (size: string) => {
         switch (size) {
-            case 'sm': return 's';
-            case 'lg': return 'l';
-            default: return 'm';
+            case 'sm': return 'px-3 py-1.5 text-sm';
+            case 'lg': return 'px-4 py-3 text-lg';
+            default: return 'px-4 py-2 text-base';
         }
     };
 
@@ -35,15 +44,21 @@ const Input: React.FC<InputProps> = ({
                     {label}
                 </label>
             )}
-            <TextInput
-                size={getGravitySize(size)}
+            <input
+                type={type}
+                value={value}
+                onChange={onChange}
+                disabled={disabled}
+                placeholder={placeholder}
                 className={cn(
                     'w-full',
-                    'text-black',
-                    'placeholder:text-black',
+                    'border border-gray-300 rounded-md',
+                    'text-black placeholder:text-gray-500',
                     'transition-all duration-200',
-                    'focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+                    'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500',
+                    'disabled:bg-gray-50 disabled:cursor-not-allowed',
                     error && 'border-red-500 focus:ring-red-500',
+                    getSizeClasses(size),
                     className
                 )}
                 {...props}

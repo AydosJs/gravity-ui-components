@@ -3,7 +3,19 @@
 import React from 'react';
 import { Button, Card, Input, Badge, Select } from '@/components/ui';
 
+// Force dynamic rendering to prevent static generation issues
+export const dynamic = 'force-dynamic';
+
 export default function DemoPage() {
+    // Move the interactive logic to a client-side function
+    const handleSelectUpdate = (value: string[]) => {
+        console.log('Selected:', value);
+    };
+
+    const handleButtonClick = () => {
+        console.log('Button clicked!');
+    };
+
     return (
         <div className="min-h-screen bg-gray-50 p-4 sm:p-6 lg:p-8">
             <div className="max-w-4xl mx-auto space-y-8">
@@ -23,20 +35,20 @@ export default function DemoPage() {
                         <div>
                             <h3 className="font-medium mb-2">Variants</h3>
                             <div className="flex flex-wrap gap-2">
-                                <Button variant="primary">Primary</Button>
-                                <Button variant="secondary">Secondary</Button>
-                                <Button variant="outline">Outline</Button>
-                                <Button variant="ghost">Ghost</Button>
-                                <Button variant="success">Success</Button>
-                                <Button variant="danger">Danger</Button>
+                                <Button variant="primary" onClick={handleButtonClick}>Primary</Button>
+                                <Button variant="secondary" onClick={handleButtonClick}>Secondary</Button>
+                                <Button variant="outline" onClick={handleButtonClick}>Outline</Button>
+                                <Button variant="ghost" onClick={handleButtonClick}>Ghost</Button>
+                                <Button variant="success" onClick={handleButtonClick}>Success</Button>
+                                <Button variant="danger" onClick={handleButtonClick}>Danger</Button>
                             </div>
                         </div>
                         <div>
                             <h3 className="font-medium mb-2">Sizes</h3>
                             <div className="flex flex-wrap items-center gap-2">
-                                <Button size="sm">Small</Button>
-                                <Button size="md">Medium</Button>
-                                <Button size="lg">Large</Button>
+                                <Button size="sm" onClick={handleButtonClick}>Small</Button>
+                                <Button size="md" onClick={handleButtonClick}>Medium</Button>
+                                <Button size="lg" onClick={handleButtonClick}>Large</Button>
                             </div>
                         </div>
                     </div>
@@ -103,7 +115,7 @@ export default function DemoPage() {
                                     { value: 'option3', content: 'Option 3' },
                                 ]}
                                 value={['']}
-                                onUpdate={(value) => console.log('Selected:', value)}
+                                onUpdate={handleSelectUpdate}
                                 placeholder="Select an option"
                             />
                         </div>
